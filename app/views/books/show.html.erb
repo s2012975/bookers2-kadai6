@@ -40,12 +40,23 @@
 					</td>
 				</tr>
 		</table>
-		<table>
+		
+		<!-- コメント一覧 -->
+		
+		<table id="js-table-comment">
 			<%= render 'book_comments/form', book: @book %>
 		</table>
+		
+		<!-- コメント投稿 -->
+		
 		<div class="col-xs-9">
 			<div id=""> 
-				<%= form_for [@book, @book_comment] do |f| %>
+			
+
+				<%= form_with(model: [@book, @book_comment], remote: true) do |f| %>
+				
+				    <!-- エラー文出力 -->
+				
 				  	<% if @book_comment.errors.any? %>
 						<div id="error_explanation">
 							<ul>
@@ -56,8 +67,10 @@
 						</div>
 					<% end %>
 				
+				    <!-- コメント投稿エリア -->
+				
 					<div>
-				      <%= f.text_area :comment, rows:'5', class: "form-control" %>
+				      <%= f.text_area :comment, id: "comment_body", class: "form-control", placeholder: "コメント" %>
 				    </div>
 				  	  <%= f.submit "送信" %>
 				<% end %>
